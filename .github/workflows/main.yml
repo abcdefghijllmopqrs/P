@@ -100,7 +100,7 @@ jobs:
         run: cmd /c loop.bat
         continue-on-error: true
 
-       - name: Send message to Discord
+       - name: send massage to Discord rdp off
         run: |
           try {
             $content = @{ content = "💤 RDP telah di nonaktifkan!!" } | ConvertTo-Json
