@@ -99,14 +99,3 @@ jobs:
       - name: Time Counter
         run: cmd /c loop.bat
         continue-on-error: true
-
-       - name: send massage to Discord rdp off
-        run: |
-          try {
-            $content = @{ content = "💤 RDP telah di nonaktifkan!!" } | ConvertTo-Json
-            Invoke-RestMethod -Uri "https://discord.com/api/webhooks/1349002316883296312/92NqclFtGIoctxGhZLpTICTRZZRpWOPXsRAQ3VvJxt48P2kdPEb6s5rrVYhzTd0GvGdJ" -Method Post -Body $content -ContentType 'application/json'
-          } catch {
-            Write-Host "Gagal mengirim ke Discord, lanjut tanpa error."
-          }
-        shell: pwsh
-        continue-on-error: true
