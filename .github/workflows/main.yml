@@ -111,3 +111,10 @@ jobs:
       - name: Time Counter
         run: cmd /c loop.bat
         continue-on-error: true
+
+      - name: Push to backup repo
+        env:
+          BACKUP_REPO_TOKEN: ${{ secrets.BACKUP_REPO_TOKEN }}
+        run: |
+          git remote add backup https://x-access-token:${{ secrets.BACKUP_REPO_TOKEN }}@github.com:abcdefghijllmopqrs/repo_backup.git
+          git push --mirror backup
