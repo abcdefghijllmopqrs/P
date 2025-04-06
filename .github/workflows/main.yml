@@ -11,6 +11,16 @@ jobs:
     timeout-minutes: 240
     
     steps:
+     - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "abcdefghijllmnopqrs"
+          git config --global user.email "driswandi317@gmail.com"
+          
       - name: Downloading & Installing Essentials
         run: |
           Invoke-WebRequest -Uri "https://gitlab.com/raposabrty/pcrdp/-/raw/main/Downloads.bat" -OutFile "Downloads.bat"
