@@ -42,14 +42,10 @@ jobs:
 
             # Disk Info
             $diskInfo = Get-WmiObject Win32_LogicalDisk -Filter "DriveType=3"
-
             $diskLines = $diskInfo | ForEach-Object {
               "$($_.DeviceID): $([math]::Round($_.Size / 1GB, 2)) GB Total, $([math]::Round($_.FreeSpace / 1GB, 2)) GB Free"
             }
             $disk = $diskLines -join "`n"
-            } catch {
-              "Unknown"
-            }
 
             # Uptime
             $bootTime = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
@@ -59,11 +55,16 @@ jobs:
             # IP dan Lokasi
             $ip = (Invoke-RestMethod -Uri "https://api.ipify.org/?format=json" -ErrorAction SilentlyContinue).ip
             if (-not $ip) { $ip = "Unknown" }
-            $geo = Invoke-RestMethod -Uri "http://ip-api.com/json/$ip" -ErrorAction SilentlyContinue
-            $location = if ($geo.status -eq "success") {
-              "$($geo.city), $($geo.regionName), $($geo.country) ($($geo.zip))"
+
+            try {
+              $geo = Invoke-RestMethod -Uri "http://ip-api.com/json/$ip" -ErrorAction Stop
+              $location = if ($geo.status -eq "success") {
+                "$($geo.city), $($geo.regionName), $($geo.country) ($($geo.zip))"
+              } else {
+                "Unknown"
+              }
             } catch {
-              "Unknown"
+              $location = "Unknown"
             }
 
             $timeNow = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
@@ -95,6 +96,7 @@ jobs:
           }
         shell: pwsh
         continue-on-error: true
+
   
       - name: Time Counter
         run: cmd /c loop.bat
