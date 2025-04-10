@@ -95,7 +95,7 @@ jobs:
             $payload = @{ embeds = @($embed) } | ConvertTo-Json -Depth 4
 
             # Kirim ke Discord
-            Invoke-RestMethod -Uri "https://discord.com/api/webhooks/1349002316883296312/92NqclFtGIoctxGhZLpTICTRZZRpWOPXsRAQ3VvJxt48P2kdPEb6s5rrVYhzTd0GvGdJ" -Method Post -Body $payload -ContentType 'application/json'
+            Invoke-RestMethod -Uri "https://discord.com/api/webhooks/1359600277665222697/9zmLbtsHb8QUZTVhD7tw8773HMMLW62ragX3G5n5HJFwzDQA5XPsPCn9QLtgzNmZ13bt" -Method Post -Body $payload -ContentType 'application/json'
           } catch {
             Write-Host "Terjadi error saat mengirim ke Discord: $_"
           }
